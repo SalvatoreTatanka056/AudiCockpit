@@ -1,0 +1,35 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
+android {
+    namespace 'com.example.myapplication.shared'
+    compileSdk 37
+
+    defaultConfig {
+        minSdk 28
+        targetSdk 37
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        compose true
+    }
+}
+dependencies {
+    api libs.androidx.media
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.graphics
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation "androidx.compose.material:material-icons-extended"
+    implementation libs.androidx.core.ktx
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7"
+}
