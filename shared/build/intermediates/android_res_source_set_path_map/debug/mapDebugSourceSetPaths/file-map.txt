@@ -6,4 +6,4 @@ com.example.myapplication.shared-debug-4 C:\Users\saromano\AndroidStudioProjects
 com.example.myapplication.shared-debug-5 C:\Users\saromano\AndroidStudioProjects\MyApplication5\shared\build\intermediates\packaged_res\debug\packageDebugResources
 com.example.myapplication.shared-debug-6 C:\Users\saromano\AndroidStudioProjects\MyApplication5\shared\src\debug\res
 com.example.myapplication.shared-main-7 C:\Users\saromano\AndroidStudioProjects\MyApplication5\shared\src\main\res
-gradleHome-0 C:\Users\saromano\.gradle
+gradleHome-0 C:\Projects\tate-a-tate\gradle
