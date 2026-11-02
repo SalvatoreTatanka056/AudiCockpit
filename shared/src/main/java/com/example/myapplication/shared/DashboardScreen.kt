@@ -251,24 +251,27 @@ fun TopIndicatorBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Exit / Back Button + Left Turn Signal + Compass Badge
+        // Red Close Button + Left Turn Signal + Compass Badge
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Exit App Button
+            // Prominent Red Close Button (X) to exit app completely
             IconButton(
-                onClick = { (context as? Activity)?.finish() },
+                onClick = {
+                    val activity = context as? Activity
+                    activity?.finishAndRemoveTask() ?: activity?.finish()
+                },
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(Color(0xFF252D3C))
+                    .background(Color(0xFFFF3B30).copy(alpha = 0.85f))
                     .size(36.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Exit App",
                     tint = Color.White,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
 
