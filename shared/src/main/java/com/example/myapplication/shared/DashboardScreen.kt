@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -103,9 +105,10 @@ fun DashboardScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(14.dp),
+                .padding(8.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             TopIndicatorBar(
                 turnIndicator = state.turnIndicator,
@@ -125,12 +128,14 @@ fun DashboardScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .padding(horizontal = 4.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
-                    modifier = Modifier.weight(1.3f),
+                    modifier = Modifier
+                        .weight(1.2f)
+                        .aspectRatio(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     SpeedometerGauge(
@@ -144,17 +149,15 @@ fun DashboardScreen(
 
                 Column(
                     modifier = Modifier
-                        .weight(1.2f)
-                        .padding(horizontal = 6.dp),
+                        .weight(1.4f)
+                        .padding(horizontal = 4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     AutomaticGearDisplay(
                         gearLabel = state.gearLabel,
                         subTextColor = subTextColor
                     )
-
-                    Spacer(modifier = Modifier.height(6.dp))
 
                     TripComputerCard(
                         tripDurationSeconds = state.tripDurationSeconds,
@@ -167,8 +170,6 @@ fun DashboardScreen(
                         subTextColor = subTextColor
                     )
 
-                    Spacer(modifier = Modifier.height(6.dp))
-
                     OdometerDisplay(
                         odometerKm = state.odometerKm,
                         tripKm = state.tripKm,
@@ -177,8 +178,6 @@ fun DashboardScreen(
                         subTextColor = subTextColor,
                         onResetTrip = viewModel::resetTrip
                     )
-
-                    Spacer(modifier = Modifier.height(6.dp))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -212,7 +211,9 @@ fun DashboardScreen(
                 }
 
                 Box(
-                    modifier = Modifier.weight(1.3f),
+                    modifier = Modifier
+                        .weight(1.2f)
+                        .aspectRatio(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     TachometerGauge(
@@ -247,16 +248,15 @@ fun TopIndicatorBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 2.dp),
+            .padding(horizontal = 8.dp, vertical = 2.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Red Close Button + Left Turn Signal + Compass Badge
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            // Prominent Red Close Button (X) to exit app completely
             IconButton(
                 onClick = {
                     val activity = context as? Activity
@@ -265,13 +265,13 @@ fun TopIndicatorBar(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(Color(0xFFFF3B30).copy(alpha = 0.85f))
-                    .size(36.dp)
+                    .size(34.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Exit App",
                     tint = Color.White,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(18.dp)
                 )
             }
 
@@ -284,13 +284,13 @@ fun TopIndicatorBar(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(leftColor)
-                    .size(36.dp)
+                    .size(34.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Left Signal",
                     tint = Color.White,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(16.dp)
                 )
             }
 
@@ -298,20 +298,20 @@ fun TopIndicatorBar(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color(0xFF1A2130))
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .padding(horizontal = 6.dp, vertical = 3.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = Icons.Default.CompassCalibration,
                     contentDescription = "Compass",
                     tint = Color(0xFF00E5FF),
-                    modifier = Modifier.size(14.dp)
+                    modifier = Modifier.size(12.dp)
                 )
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(3.dp))
                 Text(
                     text = compassHeading,
                     color = Color.White,
-                    fontSize = 11.sp,
+                    fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
@@ -320,19 +320,19 @@ fun TopIndicatorBar(
 
         // Center Audi Logo, Clock, Date, Outdoor Temp
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 AudiLogo(
-                    modifier = Modifier.size(width = 52.dp, height = 18.dp),
+                    modifier = Modifier.size(width = 46.dp, height = 16.dp),
                     color = if (isNightMode) Color(0xFFE2E8F0) else Color(0xFF0F172A)
                 )
-                Spacer(modifier = Modifier.height(2.dp))
+                Spacer(modifier = Modifier.height(1.dp))
                 Text(
                     text = "$currentTime  |  $currentDate",
                     color = if (isNightMode) Color(0xFF8E9AAF) else Color(0xFF475569),
-                    fontSize = 11.sp,
+                    fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
@@ -342,20 +342,20 @@ fun TopIndicatorBar(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color(0xFF1A2130))
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .padding(horizontal = 6.dp, vertical = 3.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = Icons.Default.WbSunny,
                     contentDescription = "Weather",
                     tint = Color(0xFFFF9500),
-                    modifier = Modifier.size(14.dp)
+                    modifier = Modifier.size(12.dp)
                 )
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(3.dp))
                 Text(
                     text = "${outdoorTempC.toInt()}°C",
                     color = Color.White,
-                    fontSize = 11.sp,
+                    fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
@@ -363,7 +363,7 @@ fun TopIndicatorBar(
 
             Box(
                 modifier = Modifier
-                    .size(34.dp)
+                    .size(32.dp)
                     .clip(CircleShape)
                     .background(if (isSpeedLimitExceeded) Color(0xFFFF3B30) else Color.White)
                     .clickable { onCycleSpeedLimit() },
@@ -373,7 +373,7 @@ fun TopIndicatorBar(
                     text = if (speedLimitKmh > 0f) "${speedLimitKmh.toInt()}" else "OFF",
                     color = if (isSpeedLimitExceeded) Color.White else Color.Black,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 11.sp,
+                    fontSize = 10.sp,
                     fontFamily = FontFamily.Monospace
                 )
             }
@@ -383,13 +383,13 @@ fun TopIndicatorBar(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(if (isNightMode) Color(0xFF1A2130) else Color(0xFFCBD5E1))
-                    .size(34.dp)
+                    .size(32.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.BrightnessMedium,
                     contentDescription = "Theme Toggle",
                     tint = if (isNightMode) Color(0xFF00E5FF) else Color(0xFF0F172A),
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(16.dp)
                 )
             }
         }
@@ -397,7 +397,7 @@ fun TopIndicatorBar(
         // Right Turn Signal & Hazard Signal
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             val hazardColor = if (turnIndicator == TurnIndicator.HAZARD) {
                 if (isTurnLightOn) Color(0xFFFF3B30) else Color(0xFF4D1410)
@@ -408,13 +408,13 @@ fun TopIndicatorBar(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(hazardColor)
-                    .size(36.dp)
+                    .size(34.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Warning,
                     contentDescription = "Hazard Signal",
                     tint = Color.White,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(16.dp)
                 )
             }
 
@@ -427,13 +427,13 @@ fun TopIndicatorBar(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(rightColor)
-                    .size(36.dp)
+                    .size(34.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = "Right Signal",
                     tint = Color.White,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(16.dp)
                 )
             }
         }
@@ -451,12 +451,12 @@ fun SpeedometerGauge(
     Box(
         modifier = Modifier
             .aspectRatio(1f)
-            .padding(4.dp),
+            .padding(2.dp),
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val center = Offset(size.width / 2f, size.height / 2f)
-            val radius = size.width.coerceAtMost(size.height) / 2f - 24.dp.toPx()
+            val radius = size.width.coerceAtMost(size.height) / 2f - 16.dp.toPx()
             val startAngle = 135f
             val sweepAngle = 270f
 
@@ -466,7 +466,7 @@ fun SpeedometerGauge(
                 startAngle = startAngle,
                 sweepAngle = sweepAngle,
                 useCenter = false,
-                style = Stroke(width = 16.dp.toPx(), cap = StrokeCap.Round),
+                style = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round),
                 topLeft = Offset(center.x - radius, center.y - radius),
                 size = Size(radius * 2, radius * 2)
             )
@@ -478,7 +478,7 @@ fun SpeedometerGauge(
                 startAngle = startAngle,
                 sweepAngle = activeSweep,
                 useCenter = false,
-                style = Stroke(width = 16.dp.toPx(), cap = StrokeCap.Round),
+                style = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round),
                 topLeft = Offset(center.x - radius, center.y - radius),
                 size = Size(radius * 2, radius * 2)
             )
@@ -487,7 +487,7 @@ fun SpeedometerGauge(
             val labelColorInt = if (isNightMode) android.graphics.Color.WHITE else android.graphics.Color.BLACK
             val textPaint = android.graphics.Paint().apply {
                 color = labelColorInt
-                textSize = 10.dp.toPx()
+                textSize = 8.dp.toPx()
                 textAlign = android.graphics.Paint.Align.CENTER
                 isAntiAlias = true
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
@@ -498,8 +498,8 @@ fun SpeedometerGauge(
                 val angleDeg = startAngle + fraction * sweepAngle
                 val angleRad = angleDeg * (PI / 180f).toFloat()
 
-                val innerR = radius - 18.dp.toPx()
-                val outerR = radius - 6.dp.toPx()
+                val innerR = radius - 14.dp.toPx()
+                val outerR = radius - 4.dp.toPx()
 
                 val startPt = Offset(
                     center.x + innerR * cos(angleRad),
@@ -514,12 +514,12 @@ fun SpeedometerGauge(
                     color = if (isNightMode) Color.White.copy(alpha = 0.6f) else Color.Black.copy(alpha = 0.6f),
                     start = startPt,
                     end = endPt,
-                    strokeWidth = 3.dp.toPx(),
+                    strokeWidth = 2.dp.toPx(),
                     cap = StrokeCap.Round
                 )
 
                 val speedValue = (fraction * maxSpeed).toInt()
-                val labelRadius = radius - 32.dp.toPx()
+                val labelRadius = radius - 24.dp.toPx()
                 val labelX = center.x + labelRadius * cos(angleRad)
                 val labelY = center.y + labelRadius * sin(angleRad) + (textPaint.textSize / 3f)
 
@@ -534,28 +534,28 @@ fun SpeedometerGauge(
             val needleAngle = startAngle + (speed / maxSpeed).coerceIn(0f, 1f) * sweepAngle
             rotate(degrees = needleAngle - 270f, pivot = center) {
                 val needlePath = Path().apply {
-                    moveTo(center.x - 6.dp.toPx(), center.y)
-                    lineTo(center.x + 6.dp.toPx(), center.y)
-                    lineTo(center.x, center.y - radius + 12.dp.toPx())
+                    moveTo(center.x - 4.dp.toPx(), center.y)
+                    lineTo(center.x + 4.dp.toPx(), center.y)
+                    lineTo(center.x, center.y - radius + 10.dp.toPx())
                     close()
                 }
                 drawPath(needlePath, color = Color(0xFFFF3B30))
             }
-            drawCircle(color = if (isNightMode) Color.White else Color(0xFF0F172A), radius = 10.dp.toPx(), center = center)
+            drawCircle(color = if (isNightMode) Color.White else Color(0xFF0F172A), radius = 7.dp.toPx(), center = center)
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = "${speed.toInt()}",
                 color = if (isSpeedLimitExceeded) Color(0xFFFF3B30) else textColor,
-                fontSize = 44.sp,
+                fontSize = 34.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Monospace
             )
             Text(
                 text = if (isSpeedLimitExceeded) "LIMIT EXCEEDED!" else "km/h",
                 color = if (isSpeedLimitExceeded) Color(0xFFFF3B30) else Color(0xFF00E5FF),
-                fontSize = 11.sp,
+                fontSize = 10.sp,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -572,12 +572,12 @@ fun TachometerGauge(
     Box(
         modifier = Modifier
             .aspectRatio(1f)
-            .padding(4.dp),
+            .padding(2.dp),
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val center = Offset(size.width / 2f, size.height / 2f)
-            val radius = size.width.coerceAtMost(size.height) / 2f - 24.dp.toPx()
+            val radius = size.width.coerceAtMost(size.height) / 2f - 16.dp.toPx()
             val startAngle = 135f
             val sweepAngle = 270f
 
@@ -587,7 +587,7 @@ fun TachometerGauge(
                 startAngle = startAngle,
                 sweepAngle = sweepAngle,
                 useCenter = false,
-                style = Stroke(width = 16.dp.toPx(), cap = StrokeCap.Round),
+                style = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round),
                 topLeft = Offset(center.x - radius, center.y - radius),
                 size = Size(radius * 2, radius * 2)
             )
@@ -598,7 +598,7 @@ fun TachometerGauge(
                 startAngle = startAngle + redlineStartFraction * sweepAngle,
                 sweepAngle = (1f - redlineStartFraction) * sweepAngle,
                 useCenter = false,
-                style = Stroke(width = 16.dp.toPx(), cap = StrokeCap.Round),
+                style = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round),
                 topLeft = Offset(center.x - radius, center.y - radius),
                 size = Size(radius * 2, radius * 2)
             )
@@ -610,7 +610,7 @@ fun TachometerGauge(
                 startAngle = startAngle,
                 sweepAngle = activeSweep,
                 useCenter = false,
-                style = Stroke(width = 16.dp.toPx(), cap = StrokeCap.Round),
+                style = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round),
                 topLeft = Offset(center.x - radius, center.y - radius),
                 size = Size(radius * 2, radius * 2)
             )
@@ -619,7 +619,7 @@ fun TachometerGauge(
             val labelColorInt = if (isNightMode) android.graphics.Color.WHITE else android.graphics.Color.BLACK
             val textPaint = android.graphics.Paint().apply {
                 color = labelColorInt
-                textSize = 12.dp.toPx()
+                textSize = 9.dp.toPx()
                 textAlign = android.graphics.Paint.Align.CENTER
                 isAntiAlias = true
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
@@ -630,8 +630,8 @@ fun TachometerGauge(
                 val angleDeg = startAngle + fraction * sweepAngle
                 val angleRad = angleDeg * (PI / 180f).toFloat()
 
-                val innerR = radius - 18.dp.toPx()
-                val outerR = radius - 6.dp.toPx()
+                val innerR = radius - 14.dp.toPx()
+                val outerR = radius - 4.dp.toPx()
 
                 val startPt = Offset(
                     center.x + innerR * cos(angleRad),
@@ -647,12 +647,12 @@ fun TachometerGauge(
                     color = tickColor,
                     start = startPt,
                     end = endPt,
-                    strokeWidth = 3.dp.toPx(),
+                    strokeWidth = 2.dp.toPx(),
                     cap = StrokeCap.Round
                 )
 
                 val rpmValue = (fraction * (maxRpm / 1000f)).toInt()
-                val labelRadius = radius - 32.dp.toPx()
+                val labelRadius = radius - 24.dp.toPx()
                 val labelX = center.x + labelRadius * cos(angleRad)
                 val labelY = center.y + labelRadius * sin(angleRad) + (textPaint.textSize / 3f)
 
@@ -668,28 +668,28 @@ fun TachometerGauge(
             val needleAngle = startAngle + (rpm / maxRpm).coerceIn(0f, 1f) * sweepAngle
             rotate(degrees = needleAngle - 270f, pivot = center) {
                 val needlePath = Path().apply {
-                    moveTo(center.x - 6.dp.toPx(), center.y)
-                    lineTo(center.x + 6.dp.toPx(), center.y)
-                    lineTo(center.x, center.y - radius + 12.dp.toPx())
+                    moveTo(center.x - 4.dp.toPx(), center.y)
+                    lineTo(center.x + 4.dp.toPx(), center.y)
+                    lineTo(center.x, center.y - radius + 10.dp.toPx())
                     close()
                 }
                 drawPath(needlePath, color = Color.Yellow)
             }
-            drawCircle(color = if (isNightMode) Color.White else Color(0xFF0F172A), radius = 10.dp.toPx(), center = center)
+            drawCircle(color = if (isNightMode) Color.White else Color(0xFF0F172A), radius = 7.dp.toPx(), center = center)
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "${(rpm / 1000f).let { String.format("%.1f", it) }}",
+                text = "${(rpm / 1000f).let { String.format(java.util.Locale.getDefault(), "%.1f", it) }}",
                 color = textColor,
-                fontSize = 40.sp,
+                fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Monospace
             )
             Text(
                 text = "x1000 RPM",
                 color = Color(0xFF76FF03),
-                fontSize = 14.sp,
+                fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold
             )
         }
@@ -704,24 +704,24 @@ fun AutomaticGearDisplay(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(8.dp))
                 .background(Color(0xFF00E5FF))
-                .padding(horizontal = 24.dp, vertical = 4.dp),
+                .padding(horizontal = 16.dp, vertical = 2.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = gearLabel,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 fontFamily = FontFamily.Monospace
             )
         }
-        Spacer(modifier = Modifier.height(2.dp))
+        Spacer(modifier = Modifier.height(1.dp))
         Text(
             text = "AUTO",
             color = subTextColor,
-            fontSize = 10.sp,
+            fontSize = 8.sp,
             fontWeight = FontWeight.Bold,
             letterSpacing = 1.sp
         )
@@ -742,44 +742,44 @@ fun TripComputerCard(
     val hours = tripDurationSeconds / 3600
     val minutes = (tripDurationSeconds % 3600) / 60
     val seconds = tripDurationSeconds % 60
-    val timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    val timeFormatted = String.format(java.util.Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
 
     Card(
         colors = CardDefaults.cardColors(containerColor = cardBgColor),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(5.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "TIME", color = subTextColor, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                Text(text = timeFormatted, color = textColor, fontSize = 11.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
+                Text(text = "TIME", color = subTextColor, fontSize = 8.sp, fontWeight = FontWeight.Bold)
+                Text(text = timeFormatted, color = textColor, fontSize = 9.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
             }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(1.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "AVG SPEED", color = subTextColor, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                Text(text = "${String.format("%.1f", avgSpeedKmh)} km/h", color = Color(0xFF00E5FF), fontSize = 11.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
+                Text(text = "AVG SPEED", color = subTextColor, fontSize = 8.sp, fontWeight = FontWeight.Bold)
+                Text(text = "${String.format(java.util.Locale.getDefault(), "%.1f", avgSpeedKmh)} km/h", color = Color(0xFF00E5FF), fontSize = 9.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
             }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(1.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "CONSUMPTION", color = subTextColor, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                Text(text = "${String.format("%.1f", instFuelL100)} L/100km", color = Color(0xFFFF9500), fontSize = 11.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
+                Text(text = "CONSUMPTION", color = subTextColor, fontSize = 8.sp, fontWeight = FontWeight.Bold)
+                Text(text = "${String.format(java.util.Locale.getDefault(), "%.1f", instFuelL100)} L/100km", color = Color(0xFFFF9500), fontSize = 9.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
             }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(1.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "EST RANGE", color = subTextColor, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                Text(text = "$estimatedRangeKm km", color = Color(0xFF00FF66), fontSize = 11.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
+                Text(text = "EST RANGE", color = subTextColor, fontSize = 8.sp, fontWeight = FontWeight.Bold)
+                Text(text = "$estimatedRangeKm km", color = Color(0xFF00FF66), fontSize = 9.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -794,10 +794,10 @@ fun CoolantTempDisplay(
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = cardBgColor),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(horizontal = 6.dp, vertical = 6.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 3.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -808,27 +808,27 @@ fun CoolantTempDisplay(
                         imageVector = Icons.Default.Thermostat,
                         contentDescription = "Temp",
                         tint = subTextColor,
-                        modifier = Modifier.size(12.dp)
+                        modifier = Modifier.size(9.dp)
                     )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(text = "TEMP", color = subTextColor, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.width(1.dp))
+                    Text(text = "TEMP", color = subTextColor, fontSize = 7.sp, fontWeight = FontWeight.Bold)
                 }
                 Text(
                     text = "${tempC.toInt()}°C",
                     color = if (tempC > 105f) Color(0xFFFF3B30) else textColor,
-                    fontSize = 11.sp,
+                    fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
             }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(1.dp))
             val progress = ((tempC - 40f) / 90f).coerceIn(0f, 1f)
             val barColor = if (tempC > 105f) Color(0xFFFF3B30) else Color(0xFF00FF66)
             LinearProgressIndicator(
                 progress = { progress },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(4.dp)
+                    .height(2.5.dp)
                     .clip(RoundedCornerShape(2.dp)),
                 color = barColor,
                 trackColor = Color(0xFF2A364F)
@@ -846,10 +846,10 @@ fun BatteryVoltageDisplay(
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = cardBgColor),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(horizontal = 6.dp, vertical = 6.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 3.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -860,26 +860,26 @@ fun BatteryVoltageDisplay(
                         imageVector = Icons.Default.BatteryChargingFull,
                         contentDescription = "12V Battery",
                         tint = subTextColor,
-                        modifier = Modifier.size(12.dp)
+                        modifier = Modifier.size(9.dp)
                     )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(text = "12V", color = subTextColor, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.width(1.dp))
+                    Text(text = "12V", color = subTextColor, fontSize = 7.sp, fontWeight = FontWeight.Bold)
                 }
                 Text(
-                    text = "${String.format("%.1f", voltage)}V",
+                    text = "${String.format(java.util.Locale.getDefault(), "%.1f", voltage)}V",
                     color = if (voltage < 11.5f) Color(0xFFFF3B30) else textColor,
-                    fontSize = 11.sp,
+                    fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
             }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(1.dp))
             val progress = ((voltage - 10f) / 6f).coerceIn(0f, 1f)
             LinearProgressIndicator(
                 progress = { progress },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(4.dp)
+                    .height(2.5.dp)
                     .clip(RoundedCornerShape(2.dp)),
                 color = Color(0xFF38BDF8),
                 trackColor = Color(0xFF2A364F)
@@ -899,11 +899,11 @@ fun OdometerDisplay(
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = cardBgColor),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -914,19 +914,19 @@ fun OdometerDisplay(
                 Text(
                     text = "ODO",
                     color = subTextColor,
-                    fontSize = 10.sp,
+                    fontSize = 8.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "${String.format("%.1f", odometerKm)} km",
+                    text = "${String.format(java.util.Locale.getDefault(), "%.1f", odometerKm)} km",
                     color = textColor,
-                    fontSize = 12.sp,
+                    fontSize = 9.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Bold
                 )
             }
 
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(1.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -937,26 +937,26 @@ fun OdometerDisplay(
                     Text(
                         text = "TRIP",
                         color = subTextColor,
-                        fontSize = 10.sp,
+                        fontSize = 8.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.width(3.dp))
                     Text(
                         text = "RESET",
                         color = Color(0xFFFF9500),
-                        fontSize = 9.sp,
+                        fontSize = 7.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
-                            .clip(RoundedCornerShape(4.dp))
+                            .clip(RoundedCornerShape(3.dp))
                             .background(Color(0xFF332314))
                             .clickable { onResetTrip() }
-                            .padding(horizontal = 4.dp, vertical = 1.dp)
+                            .padding(horizontal = 3.dp, vertical = 1.dp)
                     )
                 }
                 Text(
-                    text = "${String.format("%.1f", tripKm)} km",
+                    text = "${String.format(java.util.Locale.getDefault(), "%.1f", tripKm)} km",
                     color = Color(0xFF00E5FF),
-                    fontSize = 12.sp,
+                    fontSize = 9.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Bold
                 )
@@ -974,10 +974,10 @@ fun FuelGaugeDisplay(
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = cardBgColor),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(horizontal = 6.dp, vertical = 6.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 3.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -988,25 +988,25 @@ fun FuelGaugeDisplay(
                         imageVector = Icons.Default.LocalGasStation,
                         contentDescription = "Fuel",
                         tint = subTextColor,
-                        modifier = Modifier.size(12.dp)
+                        modifier = Modifier.size(9.dp)
                     )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(text = "FUEL", color = subTextColor, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.width(1.dp))
+                    Text(text = "FUEL", color = subTextColor, fontSize = 7.sp, fontWeight = FontWeight.Bold)
                 }
                 Text(
                     text = "${fuelPercent.toInt()}%",
                     color = textColor,
-                    fontSize = 11.sp,
+                    fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
             }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(1.dp))
             LinearProgressIndicator(
                 progress = { (fuelPercent / 100f).coerceIn(0f, 1f) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(4.dp)
+                    .height(2.5.dp)
                     .clip(RoundedCornerShape(2.dp)),
                 color = Color(0xFF00FF66),
                 trackColor = Color(0xFF2A364F)
