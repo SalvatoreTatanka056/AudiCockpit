@@ -31,4 +31,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7"
+    
+    // Libreria per Android Auto
+    implementation "androidx.car.app:app:1.4.0"
 }

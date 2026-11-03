@@ -1,2 +1,3 @@
 com.example.myapplication.shared
 string app_name
+xml automotive_app_desc
