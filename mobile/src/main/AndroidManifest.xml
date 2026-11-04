@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!-- Permessi per Android Auto -->
+    <!-- Permessi per Android Auto (Navigation) -->
     <uses-permission android:name="androidx.car.app.NAVIGATION_TEMPLATES" />
 
     <application
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Il vero motore per Android Auto: permette la Dashboard sul display dell'Audi -->
+        <!-- Il motore per Android Auto (Categoria Navigation) -->
         <service
             android:name="com.example.myapplication.shared.AudiCarAppService"
             android:exported="true"
