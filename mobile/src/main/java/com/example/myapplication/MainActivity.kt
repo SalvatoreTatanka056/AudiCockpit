@@ -18,7 +18,7 @@ import com.example.myapplication.shared.GpsSpeedTracker
 class MainActivity : ComponentActivity() {
 
     private lateinit var gpsSpeedTracker: GpsSpeedTracker
-    val viewModel = DashboardViewModel()
+    private val viewModel = DashboardViewModel.shared
 
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()

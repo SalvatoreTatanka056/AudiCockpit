@@ -59,6 +59,11 @@ data class VehicleState(
 
 class DashboardViewModel : ViewModel() {
 
+    companion object {
+        // Istanza Singleton condivisa tra MainActivity (GPS) e AudiCarScreen (Android Auto)
+        val shared = DashboardViewModel()
+    }
+
     private val _uiState = MutableStateFlow(VehicleState())
     val uiState: StateFlow<VehicleState> = _uiState.asStateFlow()
 

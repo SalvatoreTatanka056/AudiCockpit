@@ -25,11 +25,18 @@ class AudiCarScreen(carContext: CarContext) : Screen(carContext), SurfaceCallbac
 
     private var surfaceContainer: SurfaceContainer? = null
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val viewModel = DashboardViewModel() // In produzione useremmo un singleton o DI
+    private val viewModel = DashboardViewModel.shared
+    private val carGpsTracker = CarGpsTracker(
+        carContext = carContext,
+        onSpeedChanged = { speed -> viewModel.updateVehicleSpeed(speed) },
+        onBearingChanged = { bearing -> viewModel.updateCompassBearing(bearing) }
+    )
 
     init {
         carContext.getCarService(androidx.car.app.AppManager::class.java)
             .setSurfaceCallback(this)
+
+        carGpsTracker.startTracking()
 
         // Osserviamo i cambiamenti del ViewModel per ridisegnare la superficie dell'auto
         lifecycleScope.launch {
