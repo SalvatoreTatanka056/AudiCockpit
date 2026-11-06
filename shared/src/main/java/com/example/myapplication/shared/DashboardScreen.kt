@@ -122,7 +122,8 @@ fun DashboardScreen(
                 compassHeading = state.compassHeading,
                 onSelectTurn = viewModel::setTurnIndicator,
                 onToggleNightMode = viewModel::toggleNightMode,
-                onCycleSpeedLimit = viewModel::cycleSpeedLimit
+                onCycleSpeedLimit = viewModel::cycleSpeedLimit,
+                onSimulateSpeed = viewModel::simulateNextSpeedStep
             )
 
             Row(
@@ -241,7 +242,8 @@ fun TopIndicatorBar(
     compassHeading: String,
     onSelectTurn: (TurnIndicator) -> Unit,
     onToggleNightMode: () -> Unit,
-    onCycleSpeedLimit: () -> Unit
+    onCycleSpeedLimit: () -> Unit,
+    onSimulateSpeed: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -323,15 +325,20 @@ fun TopIndicatorBar(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .clickable { onSimulateSpeed() }
+                    .padding(4.dp)
+            ) {
                 AudiLogo(
                     modifier = Modifier.size(width = 46.dp, height = 16.dp),
                     color = if (isNightMode) Color(0xFFE2E8F0) else Color(0xFF0F172A)
                 )
                 Spacer(modifier = Modifier.height(1.dp))
                 Text(
-                    text = "$currentTime  |  $currentDate",
-                    color = if (isNightMode) Color(0xFF8E9AAF) else Color(0xFF475569),
+                    text = "$currentTime  |  $currentDate (TAP TEST)",
+                    color = Color(0xFF00E5FF),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace

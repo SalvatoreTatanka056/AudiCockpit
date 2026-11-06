@@ -189,6 +189,13 @@ class DashboardViewModel : ViewModel() {
         updateGpsSpeed(speedKmh)
     }
 
+    // Funzione di test touch per simulare velocità crescenti (es. +20 km/h ad ogni tocco, fino a 140 poi torna a 0)
+    fun simulateNextSpeedStep() {
+        val current = _uiState.value.speedKmh
+        val next = if (current >= 140f) 0f else current + 20f
+        updateGpsSpeed(next)
+    }
+
     fun updateRpm(rpm: Float) {
         _uiState.update { it.copy(rpm = rpm.coerceIn(0f, it.maxRpm)) }
     }
