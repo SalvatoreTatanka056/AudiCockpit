@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
         checkAndRequestLocationPermission()
 
         setContent {
-            DashboardScreen()
+            DashboardScreen(viewModel = viewModel)
         }
     }
 
